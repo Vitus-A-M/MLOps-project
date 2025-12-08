@@ -1,6 +1,6 @@
 module dagger-pipeline.go
 
-go 1.18
+go 1.25
 
 require dagger.io/dagger v0.19.8
 
