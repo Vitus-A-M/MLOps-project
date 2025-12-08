@@ -24,8 +24,7 @@ func main() {
         WithWorkdir("/src").
         WithExec([]string{"pip3", "install", "-r", "requirements.txt"}).
         WithExec([]string{"pytest", "-q"})
-
-    // Run and capture output
+    
     out, err := python.Stdout(ctx)
     if err != nil {
         panic(err)
