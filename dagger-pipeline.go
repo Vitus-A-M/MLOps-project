@@ -14,22 +14,28 @@ func main() {
     if err != nil {
         panic(err)
     }
+}
+func Build(ctx context.Context) error {
+    client, err := dagger.Connect(ctx)
+	if err != nil {
+		return err
+	}
     defer client.Close()
 
-    src := client.Host().Directory(".")
 
-    python := client.Container().
-        From("python:3.12").
-        WithDirectory("/src", src).
-        WithWorkdir("/src").
+    python := client.Container().From("python:3.12").
+        WithDirectory("/tests", client.Host().Directory(".")).
+        WithExec([]string{"/python", "--version"})
         WithExec([]string{"pip3", "install", "-r", "requirements.txt"}).
-        WithExec([]string{"pytest", "-q"})
+    python = WithExec([]string{"pytest", "-q"})
     
-    out, err := python.Stdout(ctx)
-    if err != nil {
-        panic(err)
-    }
+    _, err = python.
+		Directory("output").
+		Export(ctx, "output")
+	if err != nil {
+		return err
+	}
 
-    fmt.Println(out)
+    return nil
 }
 
