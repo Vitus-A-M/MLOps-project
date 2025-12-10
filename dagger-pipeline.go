@@ -14,23 +14,33 @@ func main() {
     if err != nil {
         panic(err)
     }
+}
+func Build(ctx context.Context) error {
+    client, err := dagger.Connect(ctx)
+	if err != nil {
+		return err
+	}
     defer client.Close()
 
-    src := client.Host().Directory(".")
 
-    python := client.Container().
-        From("python:3.12").
-        WithDirectory("/src", src).
-        WithWorkdir("/src").
-        WithExec([]string{"pip3", "install", "-r", "requirements.txt"}).
-        WithExec([]string{"pytest", "-q"})
+    python := client.Container().From("python:3.12").
+        WithDirectory("/mlops_project", client.Host().Directory(".")).
+		WithWorkdir("/mlops_project").
+        WithExec([]string{"python", "--version"}).
+        WithExec([]string{"pip", "install", "-r", "requirements.txt"}).
+	train := python
+		WithWorkdir("/mlops_project/models").
+    	WithExec([]string{"python", "train.py"})
+	WithExec([]string{"mkdir", "-p", "output"})
+	python = train.WithExec([]string{"pytest", "-q"})
 
-    // Run and capture output
-    out, err := python.Stdout(ctx)
-    if err != nil {
-        panic(err)
-    }
+    _, err = python.
+		Directory("output").
+		Export(ctx, "output")
+	if err != nil {
+		return err
+	}
 
-    fmt.Println(out)
+    return nil
 }
 
