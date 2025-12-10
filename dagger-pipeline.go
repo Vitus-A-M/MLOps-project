@@ -26,7 +26,7 @@ func Build(ctx context.Context) error {
     python := client.Container().From("python:3.12").
         WithDirectory("/mlops_project", client.Host().Directory(".")).
         WithExec([]string{"/python", "--version"})
-        WithExec([]string{"pip3", "install", "-r", "requirements.txt"}).
+        WithExec([]string{"pip", "install", "-r", "requirements.txt"}).
     python = WithExec([]string{"pytest", "-q"})
     
     _, err = python.
