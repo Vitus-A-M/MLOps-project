@@ -31,6 +31,7 @@ func Build(ctx context.Context) error {
 	train := python
 		WithWorkdir("/mlops_project/models").
     	WithExec([]string{"python", "train.py"})
+<<<<<<< HEAD
 	WithExec([]string{"mkdir", "-p", "output"})
 	python = train.WithExec([]string{"pytest", "-q"})
 
@@ -41,6 +42,17 @@ func Build(ctx context.Context) error {
 		return err
 	}
 
+=======
+	python = train.WithExec([]string{"pytest", "-q"})
+	
+    _, err = python.
+		Directory("output").
+		Export(ctx, "output")
+	if err != nil {
+		return err
+	}
+
+>>>>>>> afac069c9b870df86ec795e34c72ad9b5756a810
     return nil
 }
 
