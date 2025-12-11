@@ -2,24 +2,21 @@ package main
 
 import (
     "context"
-    "fmt"
-
     "dagger.io/dagger"
 )
 
 func main() {
     ctx := context.Background()
 
-    client, err := dagger.Connect(ctx)
-    if err != nil {
+    if err := Build(ctx); err != nil {
         panic(err)
     }
 }
 func Build(ctx context.Context) error {
     client, err := dagger.Connect(ctx)
-	if err != nil {
-		return err
-	}
+    if err != nil {
+	return err
+}
     defer client.Close()
 
 
@@ -32,17 +29,9 @@ func Build(ctx context.Context) error {
     train := python.
 	WithWorkdir("/mlops_project/models").
     	WithExec([]string{"python", "train.py"}).
-	WithExec([]string{"mkdir", "-p", "output"}).
-	python = train.WithExec([]string{"pytest", "-q"})
+	WithExec([]string{"mkdir", "-p", "output"})
 
-    _, err = python.
-		Directory("output").
-		Export(ctx, "output")
-	if err != nil {
-		return err
-	}
-
-	python = train.WithExec([]string{"pytest", "-q"})
+    python = train.WithExec([]string{"pytest", "-q"})
 
     _, err = python.
 		Directory("output").
