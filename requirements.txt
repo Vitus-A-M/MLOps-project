@@ -3,11 +3,13 @@ jupyterlab
 matplotlib
 mkdocs
 notebook
-numpy == 1.26.4
-pandas == 2.2.3
+numpy
+pandas
 pip
 pytest
 python-dotenv
 ruff
 scikit-learn
+mlflow
+xgboost
 -e .
