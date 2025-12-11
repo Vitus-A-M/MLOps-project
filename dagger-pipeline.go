@@ -25,13 +25,14 @@ func Build(ctx context.Context) error {
 
     python := client.Container().From("python:3.12").
         WithDirectory("/mlops_project", client.Host().Directory(".")).
-		WithWorkdir("/mlops_project").
+	WithWorkdir("/mlops_project").
         WithExec([]string{"python", "--version"}).
-        WithExec([]string{"pip", "install", "-r", "requirements.txt"}).
-	train := python
-		WithWorkdir("/mlops_project/models").
-    	WithExec([]string{"python", "train.py"})
-	WithExec([]string{"mkdir", "-p", "output"})
+        WithExec([]string{"pip", "install", "-r", "requirements.txt"})
+
+    train := python.
+	WithWorkdir("/mlops_project/models").
+    	WithExec([]string{"python", "train.py"}).
+	WithExec([]string{"mkdir", "-p", "output"}).
 	python = train.WithExec([]string{"pytest", "-q"})
 
     _, err = python.
