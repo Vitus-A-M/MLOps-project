@@ -19,7 +19,6 @@ func Build(ctx context.Context) error {
 }
     defer client.Close()
 
-
     python := client.Container().From("python:3.10").
         WithDirectory("/mlops_project", client.Host().Directory(".")).
 	WithWorkdir("/mlops_project").
