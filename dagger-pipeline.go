@@ -26,7 +26,6 @@ func Build(ctx context.Context) error {
         WithExec([]string{"pip", "install", "-r", "requirements.txt"})
 
     train := python.
-	WithWorkdir("/mlops_project").
         WithExec([]string{"mkdir","-p","output"}).
     	WithExec([]string{"python", "mlops_project/scripts/main.py"})
 
