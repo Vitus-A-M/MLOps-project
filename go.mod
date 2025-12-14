@@ -1,4 +1,4 @@
-module dagger-pipeline.go
+module dagger-pipeline
 
 go 1.25
 
