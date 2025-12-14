@@ -40,7 +40,12 @@ def train_xgboost(X_train, y_train):
 def train_logistic_regression(X_train, y_train, experiment_name):
     
     mlflow.sklearn.autolog(log_input_examples=True, log_models=False)
-    experiment_id = mlflow.get_experiment_by_name(experiment_name).experiment_id
+    experiment = mlflow.get_experiment_by_name(experiment_name)
+
+    if experiment is None:
+        experiment_id = mlflow.create_experiment(experiment_name)
+    else:
+        experiment_id = experiment.experiment_id
 
     with mlflow.start_run(experiment_id=experiment_id) as run:
         model = LogisticRegression()

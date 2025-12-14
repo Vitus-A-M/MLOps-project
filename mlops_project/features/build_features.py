@@ -9,8 +9,8 @@ def create_dummy_cols(df, col):
 
 def build_features(data: pd.DataFrame):
     data = data.drop(["lead_id", "customer_code", "date_part"], axis=1)
-
-    cat_cols = ["customer_group", "onboarding", "bin_source", "source"]
+    print("Columns in build_features:", data.columns.tolist())
+    cat_cols = ["customer_group", "onboarding", "source"]
     cat_vars = data[cat_cols].copy()
 
     other_vars = data.drop(cat_cols, axis=1)
