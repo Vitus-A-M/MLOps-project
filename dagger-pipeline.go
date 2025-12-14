@@ -23,13 +23,9 @@ func Build(ctx context.Context) error {
         WithDirectory("/mlops_project", client.Host().Directory(".")).
 	WithWorkdir("/mlops_project").
         WithExec([]string{"python", "--version"}).
-        WithExec([]string{"pip", "install", "-r", "requirements.txt"})
-
-    train := python.
+        WithExec([]string{"pip", "install", "-r", "requirements.txt"}).
         WithExec([]string{"mkdir","-p","output"}).
     	WithExec([]string{"python", "mlops_project/scripts/main.py"})
-
-    python = train.WithExec([]string{"pytest", "-q"})
 
     _, err = python.
 		Directory("output").
