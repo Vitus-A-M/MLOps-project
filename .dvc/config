@@ -1,0 +1,12 @@
+[core]
+    remote = dvc_data4
+['remote "dvc_data"']
+    url = https://github.com/Jeppe-T-K/itu-sdse-project-data/tree/main
+['remote "dvc_data1"']
+    url = https://github.com/Vitus-A-M/MLOps-project/tree/feature/dagger-pipeline/notebooks/artifacts
+['remote "dvc_data2"']
+    url = https://github.com/Vitus-A-M/MLOps-project/blob/feature/dagger-pipeline/notebooks/artifacts/raw_data.csv.dvc
+['remote "dvc_data3"']
+    url = https://github.com/Jeppe-T-K/itu-sdse-project-data
+['remote "dvc_data4"']
+    url = https://github.com/Vitus-A-M/MLOps-project
