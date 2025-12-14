@@ -2,10 +2,10 @@ MAX_DATE = "2024-01-31"
 MIN_DATE = "2024-01-01"
 
 
-ARTIFACTS_DIR = "./artifacts"
-RAW_DATA_PATH = "./artifacts/raw_data.csv"
-GOLD_DATA_PATH = "./artifacts/train_data_gold.csv"
-SCALER_PATH = "./artifacts/scaler.pkl"
+ARTIFACTS_DIR = "./notebooks/artifacts"
+RAW_DATA_PATH = "./notebooks/artifacts/raw_data.csv"
+GOLD_DATA_PATH = "./notebooks/artifacts/train_data_gold.csv"
+SCALER_PATH = "./notebooks/artifacts/scaler.pkl"
 
 
 MODEL_NAME = "lead_model"
