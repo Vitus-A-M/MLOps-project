@@ -1,6 +1,7 @@
 import pandas as pd
 import subprocess
 import json
+import os
 from mlops_project.config import (
     RAW_DATA_PATH, MIN_DATE, MAX_DATE, ARTIFACTS_DIR
 )
