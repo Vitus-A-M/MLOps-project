@@ -1,0 +1,39 @@
+name: Train and Test Model
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dagger
+        run: |
+          curl -L https://dl.dagger.io/dagger/install.sh | sh
+          sudo mv bin/dagger /usr/local/bin/
+
+      - name: Run Dagger pipeline
+        run: dagger run go run dagger-pipeline.go
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: model
+          path: output/model
+
+      - name: Test model with provided action
+        uses: ./model-validator
+        with:
+          model-path: output/model
