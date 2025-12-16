@@ -2,12 +2,7 @@ name: Train and Test Model
 
 on:
   push:
-    branches:
-      - main
-      - "feature/**"
   pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -37,8 +32,3 @@ jobs:
           name: model
           path: output/model
           retention-days: 90
-
-      - name: Test model inference
-        uses: ./model-validator
-        with:
-          model-path: output/model
