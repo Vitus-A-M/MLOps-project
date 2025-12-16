@@ -1,8 +1,9 @@
 package main
 
 import (
-    "context"
-    "dagger.io/dagger"
+	"context"
+
+	"dagger.io/dagger"
 )
 
 func main() {
@@ -25,7 +26,8 @@ func Build(ctx context.Context) error {
         WithExec([]string{"python", "--version"}).
         WithExec([]string{"pip", "install", "-r", "requirements.txt"}).
         WithExec([]string{"mkdir","-p","output"}).
-    	WithExec([]string{"python", "mlops_project/scripts/main.py"})
+    	WithExec([]string{"python", "mlops_project/scripts/main.py"}).
+        WithExec([]string{"ls", "-lah", "output"}) 
 
     _, err = python.
 		Directory("output").
