@@ -2,9 +2,12 @@ name: Train and Test Model
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - "feature/**"
   pull_request:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -12,17 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          python-version: "3.10"
+          go-version: "1.21"
 
-      - name: Install Dagger
+      - name: Install Dagger CLI
         run: |
-          curl -L https://dl.dagger.io/dagger/install.sh | sh
-          sudo mv bin/dagger /usr/local/bin/
+          cd /usr/local
+          curl -L https://dl.dagger.io/dagger/install.sh | sudo sh
 
       - name: Run Dagger pipeline
         run: dagger run go run dagger-pipeline.go
@@ -32,8 +36,9 @@ jobs:
         with:
           name: model
           path: output/model
+          retention-days: 90
 
-      - name: Test model with provided action
+      - name: Test model inference
         uses: ./model-validator
         with:
           model-path: output/model
