@@ -55,5 +55,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: train
     steps:
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install XGBoost
+        run: pip install xgboost
+
       - name: Run Model Inference Test
         uses: lasselundstenjensen/itu-sdse-project-model-validator@main
