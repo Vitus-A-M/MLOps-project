@@ -137,6 +137,7 @@ GitHub Actions will automatically:
 2. Run Dagger pipeline
 3. Train models
 4. Upload `model` artifact
+5. Testing the model
 
 
 ## Development Workflow
