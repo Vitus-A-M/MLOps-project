@@ -1,4 +1,4 @@
-# ITU BDS MLOps'25 - Lead Prediction Project
+# ITU BDS MLOps'25 - Exam Project
 
 ## Group Members
 
@@ -8,10 +8,9 @@
 
 ## Project Description
 
-This project implements a complete MLOps pipeline for predicting lead conversion indicators using machine learning. The pipeline includes:
+In this project, we have restructured machine learning code to adhere to concepts of MLOps such as:
 
 - **Data versioning** with DVC
-- **Model training** with XGBoost and Logistic Regression
 - **Experiment tracking** with MLflow
 - **Container orchestration** with Dagger (Go)
 - **CI/CD automation** with GitHub Actions
@@ -58,7 +57,7 @@ The best performing model (Logistic Regression, F1~0.78) is automatically traine
 ## Prerequisites
 
 - **Python 3.10**
-- **Go 1.21+**
+- **Go 1.25**
 - **Dagger CLI**
 - **DVC**
 - **Git**
@@ -139,60 +138,6 @@ GitHub Actions will automatically:
 3. Train models
 4. Upload `model` artifact
 
-## MLOps Components
-
-### Data Versioning (DVC)
-
-- **Raw data**: `notebooks/artifacts/raw_data.csv`
-- **Remote**: GitHub repository
-- **Commands**:
-  - Pull data: `dvc pull`
-  - Check status: `dvc status`
-
-### Experiment Tracking (MLflow)
-
-- **Location**: `mlruns/` directory
-- **Features**: Automatic parameter and metric logging
-- **View experiments**:
-
-```bash
-  mlflow ui
-  # Open http://localhost:5000
-```
-
-### Orchestration (Dagger)
-
-- **File**: `dagger-pipeline.go`
-- **Container**: Python 3.10
-- **Benefits**:
-  - Reproducible builds
-  - Cross-platform compatibility
-  - Isolated environments
-
-### CI/CD (GitHub Actions)
-
-- **Workflow**: `.github/workflows/train-model.yml`
-- **Triggers**: Push to `main` or `feature/*` branches
-- **Steps**:
-  1. Checkout code
-  2. Set up Python 3.10
-  3. Install DVC and pull data
-  4. Set up Go and Dagger
-  5. Run Dagger pipeline
-  6. Upload model artifact
-
-## Model Performance
-
-Current best model: **Logistic Regression**
-
-| Metric    | Score |
-| --------- | ----- |
-| Accuracy  | 0.79  |
-| F1 Score  | 0.78  |
-| Precision | 0.79  |
-| Recall    | 0.78  |
-
-Detailed metrics available in `output/results.json` after training.
 
 ## Development Workflow
 
@@ -201,17 +146,16 @@ Detailed metrics available in `output/results.json` after training.
 - `main` - Production-ready code
 - `feature/*` - Feature development -`debug/*` - Debugging existing features
 
-### Semantic Commits
+### Commit messages
 
-We use descriptive commit messages that clearly explain changes:
+While we don't strictly follow conventional commit prefixes (`feat:`, `fix:`), our messages reasonably describe what was changed.
 
 **Examples from our project:**
 
-- "add GitHub Actions workflow for model training"
-- "fix DVC data pulling in container"
-- "update main.py with comprehensive error handling"
+- "workflows merged correctly - syntax issue solved"
+- "Merge branch 'main' into feature/githubworkflow"
+- "train and test worflow seperated."
 
-While we don't strictly follow conventional commit prefixes (`feat:`, `fix:`), our messages clearly describe what was changed and why.
 
 ### Making Changes
 
@@ -241,42 +185,3 @@ While we don't strictly follow conventional commit prefixes (`feat:`, `fix:`), o
 ```
 
 5. GitHub Actions will run automatically
-
-## Troubleshooting
-
-### DVC pull fails
-
-```bash
-# Fallback: manual download
-curl -L https://raw.githubusercontent.com/Jeppe-T-K/itu-sdse-project-data/refs/heads/main/raw_data.csv -o notebooks/artifacts/raw_data.csv
-```
-
-### Dagger fails locally
-
-```bash
-# Check Docker is running
-docker ps
-
-# Clean Dagger cache
-dagger run --cleanup
-```
-
-### Import errors
-
-```bash
-# Reinstall dependencies
-pip install -r requirements.txt --force-reinstall
-```
-
-## Repository
-
-**GitHub**: https://github.com/Vitus-A-M/MLOps-project
-
-## License
-
-This project is part of the ITU BDS MLOps course (2025).
-
----
-
-**Questions?** Contact the team members or post on the course forum.
-EOF
