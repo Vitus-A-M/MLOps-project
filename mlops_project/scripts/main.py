@@ -58,7 +58,7 @@ def main():
         
         # Save best model with standard name 'model' for GitHub workflow
         best_model = lr_model.best_estimator_ if best == "logistic_regression" else xgb_model.best_estimator_
-        with open(f"{output_dir}/model", "wb") as f:
+        with open(f"{output_dir}/model.pkl", "wb") as f:
             pickle.dump(best_model, f)
         print(f"✓ Saved best model: {best}")
         
