@@ -13,17 +13,22 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     steps:
-      - name: Download model artifact from Train workflow
+      - name: Download model artifact
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: train-model.yml
           name: model
-          path: .
+          path: model
+          repo: ${{ github.repository }}
+          branch: main
+          run_id: ${{ github.event.workflow_run.id }}
 
-      - name: Verify artifact downloaded
+      - name: List downloaded files
         run: |
+          echo "Current directory:"
           ls -lah
-          ls -lah model/ || echo "model folder not found"
+          echo "Model directory:"
+          ls -lah model/
 
       - name: Run Model Inference Test
         uses: lasselundstenjensen/itu-sdse-project-model-validator@main
