@@ -22,7 +22,7 @@ The best performing model (Logistic Regression, F1~0.78) is automatically traine
 ```
 .
 ├── .github/workflows/       # GitHub Actions CI/CD
-│   └── train-model.yml     # Model training workflow
+│   └── train-and-test-model.yml     # Model training workflow
 ├── mlops_project/          # Main Python package
 │   ├── data/              # Data loading and preprocessing
 │   │   ├── load.py        # DVC data pulling and loading
